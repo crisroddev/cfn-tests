@@ -1,0 +1,14 @@
+# Custonm Resources
+## Enable you to write custom provision logic in templates that AWS CFN runs anytime you create, update, delere
+## Defined in templates using AWS::CloudFormation::CustomResource or Custom::MyCustomResourceTypeName (Recommended)
+
+# Two Types
+## Amazon SNS-backed Custome Resources
+## AWS Lambda-backed Custom Resourcs
+
+# Use Case
+## An AWS resource not covered yet
+## An on-premise resource
+## Running Lambda function to empty an S3 bucket before being deleted
+## Fetching an AMI id
+## Anything you want

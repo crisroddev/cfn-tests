@@ -1,0 +1,29 @@
+Parameters:
+  VPCId:
+    Description: VPCto create SG and EC2
+    Type: AWS::EC2::VPC::Id
+  
+  TemplateUrl:
+    Description: URL of the nested stack template
+    Type: String
+  
+  ImageId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-linux-latest/amzn-ami-hvm-x86_64-gp2
+
+Resources:
+  SSHSecurityGroupStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref TemplateUrl
+      Parameters:
+        ApplicationName: !Ref AWS::StackName
+        VPCId: !Ref VPCId
+      TimeoutInMinutes: 5
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !Ref ImageId
+      SecurityGroupIds:
+        - !GetAtt SSHSecurityGroupStack.Outputs.SSHGroupId

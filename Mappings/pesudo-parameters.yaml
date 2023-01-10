@@ -1,0 +1,9 @@
+# Pseudo Parameters
+### AWS::AccountId --> AccountId
+### AWS::Region --> Actual Region
+### AWS::StackId --> ARN CFN Template
+### AWS::StackName --> MyStack
+### AWS::NotificationARNs --> SNS Topic
+### AWS::NoValue --> No value is to make a skip
+### AWS::Partition --> For china and gob
+### AWS::URLSuffix --> amazonaws.com, amazonaws.com.cn

@@ -1,0 +1,4 @@
+# Stacks that are part of other stacks
+# Common components in separate stacks and call them from other stacks
+# Nested Stacks are best practices
+# To update you always need to update parent / root stack

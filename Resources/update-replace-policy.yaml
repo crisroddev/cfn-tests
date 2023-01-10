@@ -1,0 +1,11 @@
+Parameters:
+  BuckeName:
+    Type: String
+
+Resources:
+  MyS3Bucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: !Ref BuckeName
+  DeletionPolicy:  Retain
+  UpdatateReplacepolicy: Retain

@@ -1,0 +1,48 @@
+Parameters:
+  ImageId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-linux-latest/amzn-ami-hvm-x86_64-gp2
+  
+  EnvType:
+    Description: Environment Type
+    Default: test
+    Type: String
+    AllowedValues:
+      - prod
+      - test
+    ConstraintDescription: Must specify prod or test
+
+Conditions:
+# If we select test CreateProdResource will be false, if we select prod CreateProdResource will be true and will create specific resources
+  CreateProdResource: !Equals [ !Ref EnvType, prod ]
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref ImageId
+      InstanceType: t2.micro
+  
+  MountPoint:
+    Type: AWS::EC2::VolumeAttachment
+    Condition: CreateProdResource
+    Properties:
+      InstanceId:
+        !Ref EC2Instance
+      VolumeId:
+        !Ref NewVolume
+      Device: /dev/sdh
+  
+  NewVolume:
+    Type: AWS::EC2::Volume
+    Condition: CreateProdResource
+    Properties:
+      Size: 100
+      AvailabilityZone: 
+        !GetAtt EC2Instance.AvailabilityZone
+
+Outputs:
+  VolumeId:
+    Condition: CreateProdResource
+    Value:
+      !Ref NewVolume
